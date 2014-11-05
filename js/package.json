@@ -1,0 +1,10 @@
+{
+  "name": "threejs_bootstrap",
+  "description": "Simple ThreeJS App",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "browserify": "*",
+    "three": "*"
+  }
+}

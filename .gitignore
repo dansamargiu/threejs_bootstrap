@@ -1,0 +1,8 @@
+#browserify output
+js/bundle.js
+
+#npm modules
+js/node_modules/
+
+#sublime workspace file
+*.sublime-workspace

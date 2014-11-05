@@ -1,0 +1,44 @@
+{
+	"folders":
+	[
+		{
+			"path": "js",
+			"name": "js",
+			"file_exclude_patterns": [
+			"*.gitignore",
+			"*.gitmodules",
+			"*.tags",
+			"*.tags_sorted_by_file",
+			"bundle.js"
+			],
+			"folder_exclude_patterns": [
+			".git",
+			"node_modules"
+			]
+		},
+		{
+			"path": "html",
+			"name": "html",
+			"file_exclude_patterns": [
+			"*.gitignore",
+			"*.gitmodules",
+			"*.tags",
+			"*.tags_sorted_by_file"
+			],
+			"folder_exclude_patterns": [
+			".git"
+			]
+		}
+	],
+	"build_systems":
+    [
+        {
+            "name": "Browserify",
+            "working_dir": "${project_path:${folder}}",
+            "cmd":
+            [
+            	"bash", "build.sh"
+            ]
+        }
+    ]
+}
