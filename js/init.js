@@ -1,7 +1,9 @@
 var THREE = require('three');
 
 module.exports = function(world) {
-  world.renderer = new THREE.WebGLRenderer();
+  world.renderer = new THREE.WebGLRenderer({
+    preserveDrawingBuffer: true
+  });
   world.renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(world.renderer.domElement);
 
@@ -41,10 +43,7 @@ module.exports = function(world) {
   // Move the camera out so it is not in the cube
   world.camera.position.z = 5;
 
-  cube.update = function() {
-    this.rotation.x += 0.01;
-    this.rotation.y += 0.01;
-  };
+  cube.update = function() {};
 
   world.camera.update = function() {
 

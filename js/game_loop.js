@@ -2,7 +2,7 @@ var MS_PER_UPDATE = 30;
 var previous = new Date().getTime();
 var lag = 0.0;
 
-module.exports.start = function(render, entities) {
+module.exports.start = function(input, entities, render) {
   // Game Loop
   function game_loop() {
     requestAnimationFrame(game_loop);
@@ -13,7 +13,7 @@ module.exports.start = function(render, entities) {
     lag += elapsed;
 
     // process input
-    // TODO
+    input.handleKeys();
 
     while (lag >= MS_PER_UPDATE) {
       // update
