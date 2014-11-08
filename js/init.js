@@ -8,19 +8,33 @@ module.exports = function(world) {
   world.renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(world.renderer.domElement);
 
-  world.scene = new THREE.Scene();
-  world.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
 
-  // create a set of coordinate axes to help orient user
-  // specify length in pixels in each direction
-  world.scene.add(new THREE.AxisHelper(100));
+  scene.add(new THREE.AxisHelper(100));
+  scene.add(geometry_builder.create_cube());
 
-  var cube = geometry_builder.create_cube();
-  world.scene.add(cube);
-
-  // Move the camera out so it is not in the cube
-  world.camera.position.z = 5;
   world.entities = {
-    camera: world.camera
+    camera: camera,
+    scene: scene
   }
+
+  // TODO: make a constructor for this
+  world.input = require('./input_handler');
+  document.onkeydown = world.input.handleKeyDown;
+  document.onkeyup = world.input.handleKeyUp;
+
+  world.input.registerKeybind(37, function() {
+    world.entities.camera.rotation.y += 0.01;
+  });
+  world.input.registerKeybind(39, function() {
+    world.entities.camera.rotation.y -= 0.01;
+  });
+  world.input.registerKeybind(38, function() {
+    world.entities.camera.rotation.x += 0.01;
+  });
+  world.input.registerKeybind(40, function() {
+    world.entities.camera.rotation.x -= 0.01;
+  });
 }

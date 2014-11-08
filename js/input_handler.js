@@ -1,46 +1,26 @@
-var g_currentlyPressedKeys = {};
+var g_cur_pressed_keys = {};
 
 module.exports = {
-  handleKeyDown: function(event) {
-    g_currentlyPressedKeys[event.keyCode] = true;
+  m_keybind_map: {},
 
-    if (String.fromCharCode(event.keyCode) == "F") {
-      filter += 1;
-      if (filter == 3) {
-        filter = 0;
-      }
-    }
+  handleKeyDown: function(event) {
+    g_cur_pressed_keys[event.keyCode] = true;
   },
 
   handleKeyUp: function(event) {
-    g_currentlyPressedKeys[event.keyCode] = false;
+    g_cur_pressed_keys[event.keyCode] = false;
+  },
+
+  registerKeybind: function(keyCode, action) {
+    if (typeof(action) != "function") return;
+    this.m_keybind_map[keyCode] = action;
   },
 
   handleKeys: function(entities) {
-    if (g_currentlyPressedKeys[33]) {
-      // Page Up
-      z -= 0.05;
-    }
-    if (g_currentlyPressedKeys[34]) {
-      // Page Down
-      z += 0.05;
-    }
-    if (g_currentlyPressedKeys[37]) {
-      // Left cursor key
-      entities.camera.rotation.y += 0.01;
-    }
-    if (g_currentlyPressedKeys[39]) {
-      // Right cursor key
-      entities.camera.rotation.y -= 0.01;
-    }
-    if (g_currentlyPressedKeys[38]) {
-      // Up cursor key
-      entities.camera.rotation.x += 0.01;
-
-    }
-    if (g_currentlyPressedKeys[40]) {
-      // Down cursor key
-      entities.camera.rotation.x -= 0.01;
+    for (var property in this.m_keybind_map) {
+      if (this.m_keybind_map.hasOwnProperty(property)) {
+        if (g_cur_pressed_keys[property]) this.m_keybind_map[property]();
+      }
     }
   }
 }

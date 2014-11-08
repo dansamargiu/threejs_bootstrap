@@ -10,7 +10,7 @@ function update_entities(entities) {
   }
 }
 
-module.exports.start = function(input, entities, render) {
+module.exports.start = function(input, entities, renderer) {
   // Game Loop
   function game_loop() {
     requestAnimationFrame(game_loop);
@@ -29,8 +29,8 @@ module.exports.start = function(input, entities, render) {
       lag -= MS_PER_UPDATE;
     }
 
-    // render
-    render(lag / MS_PER_UPDATE);
+    // render (todo: use lag/MS_PER_UPDATE to get offset)
+    renderer.render(entities.scene, entities.camera);
   }
 
   // Start the loop
