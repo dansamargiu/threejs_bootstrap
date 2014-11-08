@@ -2,6 +2,14 @@ var MS_PER_UPDATE = 30;
 var previous = new Date().getTime();
 var lag = 0.0;
 
+function update_entities(entities) {
+  for (var property in entities) {
+    if (entities.hasOwnProperty(property) && typeof entities[property].update == 'function') {
+      entities[property].update();
+    }
+  }
+}
+
 module.exports.start = function(input, entities, render) {
   // Game Loop
   function game_loop() {
@@ -13,20 +21,15 @@ module.exports.start = function(input, entities, render) {
     lag += elapsed;
 
     // process input
-    input.handleKeys();
+    input.handleKeys(entities);
 
     while (lag >= MS_PER_UPDATE) {
       // update
-      console.log("update");
-      for (var i = 0; i < entities.length; i++) {
-        entities[i].update();
-      }
-
+      update_entities(entities);
       lag -= MS_PER_UPDATE;
     }
 
     // render
-    console.log("render");
     render(lag / MS_PER_UPDATE);
   }
 

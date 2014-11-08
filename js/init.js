@@ -20,5 +20,7 @@ module.exports = function(world) {
 
   // Move the camera out so it is not in the cube
   world.camera.position.z = 5;
-  world.entities = [];
+  world.entities = {
+    camera: world.camera
+  }
 }
