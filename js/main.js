@@ -1,12 +1,12 @@
-var _world = {
+var g_world = {
   name: "main"
 };
 
 // TODO: move key handlers into another module
-var currentlyPressedKeys = {};
+var g_currentlyPressedKeys = {};
 
 function handleKeyDown(event) {
-  currentlyPressedKeys[event.keyCode] = true;
+  g_currentlyPressedKeys[event.keyCode] = true;
 
   if (String.fromCharCode(event.keyCode) == "F") {
     filter += 1;
@@ -17,54 +17,54 @@ function handleKeyDown(event) {
 }
 
 function handleKeyUp(event) {
-  currentlyPressedKeys[event.keyCode] = false;
+  g_currentlyPressedKeys[event.keyCode] = false;
 }
 
 var input = {
   handleKeys: function() {
-    if (currentlyPressedKeys[33]) {
+    if (g_currentlyPressedKeys[33]) {
       // Page Up
       z -= 0.05;
     }
-    if (currentlyPressedKeys[34]) {
+    if (g_currentlyPressedKeys[34]) {
       // Page Down
       z += 0.05;
     }
-    if (currentlyPressedKeys[37]) {
+    if (g_currentlyPressedKeys[37]) {
       // Left cursor key
-      _world.camera.rotation.y += 0.01;
+      g_world.camera.rotation.y += 0.01;
     }
-    if (currentlyPressedKeys[39]) {
+    if (g_currentlyPressedKeys[39]) {
       // Right cursor key
-      _world.camera.rotation.y -= 0.01;
+      g_world.camera.rotation.y -= 0.01;
     }
-    if (currentlyPressedKeys[38]) {
+    if (g_currentlyPressedKeys[38]) {
       // Up cursor key
-      _world.camera.rotation.x += 0.01;
+      g_world.camera.rotation.x += 0.01;
 
     }
-    if (currentlyPressedKeys[40]) {
+    if (g_currentlyPressedKeys[40]) {
       // Down cursor key
-      _world.camera.rotation.x -= 0.01;
+      g_world.camera.rotation.x -= 0.01;
     }
   }
 }
 
 // ---------------------------------------------
-
+// TODO: move into another module.
 function render(leftover) {
   console.log(leftover);
   // TODO: use leftover ammount (value = 0 to 1)
   // to extrapolate animation between frames.
-  _world.renderer.render(_world.scene, _world.camera);
+  g_world.renderer.render(g_world.scene, g_world.camera);
 }
 
 var init = require('./init.js');
-init(_world);
+init(g_world);
 
-// TODO: put these in init
+// TODO: put these in init.
 document.onkeydown = handleKeyDown;
 document.onkeyup = handleKeyUp;
 
 var game_loop = require('./game_loop.js');
-game_loop.start(input, _world.entities, render);
+game_loop.start(input, g_world.entities, render);

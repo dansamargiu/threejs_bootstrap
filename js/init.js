@@ -1,4 +1,5 @@
 var THREE = require('three');
+var geometry_builder = require('./geometry_builder');
 
 module.exports = function(world) {
   world.renderer = new THREE.WebGLRenderer({
@@ -14,40 +15,10 @@ module.exports = function(world) {
   // specify length in pixels in each direction
   world.scene.add(new THREE.AxisHelper(100));
 
-  // Create an array of materials to be used in a cube, one for each side
-  var cubeMaterialArray = [];
-  // order to add materials: x+,x-,y+,y-,z+,z-
-  cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff3333
-  }));
-  cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xff8800
-  }));
-  cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-    color: 0xffff33
-  }));
-  cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-    color: 0x33ff33
-  }));
-  cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-    color: 0x3333ff
-  }));
-  cubeMaterialArray.push(new THREE.MeshBasicMaterial({
-    color: 0x8833ff
-  }));
-  var cubeMaterials = new THREE.MeshFaceMaterial(cubeMaterialArray);
-  var cubeGeometry = new THREE.CubeGeometry(1, 1, 1);
-  var cube = new THREE.Mesh(cubeGeometry, cubeMaterials);
+  var cube = geometry_builder.create_cube();
   world.scene.add(cube);
 
   // Move the camera out so it is not in the cube
   world.camera.position.z = 5;
-
-  cube.update = function() {};
-
-  world.camera.update = function() {
-
-  };
-
-  world.entities = [world.camera, cube];
+  world.entities = [];
 }
